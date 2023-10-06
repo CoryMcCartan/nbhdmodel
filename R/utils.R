@@ -9,6 +9,8 @@ M_PER_MI = 1609.34
 #' @param dist the radius of the area, in miles
 #'
 #' @returns a filtered `block_d`
+#'
+#' @export
 local_area = function(fips, block_d, geom_d, dist=0.5) {
     dist = dist * M_PER_MI
     idx = match(fips, block_d$fips)
@@ -53,6 +55,8 @@ binned_resid = function(model, bins=16) {
 #' @param y a binary indicator
 #'
 #' @returns the scalar AUC
+#'
+#' @export
 fastAUC <- function(x, y) {
     x1 = x[y==1]; n1 = length(x1);
     x2 = x[y==0]; n2 = length(x2);
