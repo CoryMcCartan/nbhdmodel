@@ -25,7 +25,7 @@ effect will be set to zero.}
 \item{block_d}{the block data frame}
 
 \item{proc_fn}{a processing function that is used to prepare raw model data
-(from \code{\link[=make_model_frame]{make_model_frame()}}) for fitting}
+for fitting}
 
 \item{use_distance}{if \code{FALSE}, remove block-to-home distance from the linear
 predictor.}

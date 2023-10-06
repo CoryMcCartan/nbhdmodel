@@ -16,6 +16,8 @@
 \item{inner_prob}{the inner credible interval probability}
 
 \item{outer_prob}{the inner credible interval probability}
+
+\item{...}{Ignored.}
 }
 \value{
 A ggplot.

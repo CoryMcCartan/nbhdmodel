@@ -8,7 +8,7 @@
 #'   (where `dist` must be the column that encodes distance), and will have random
 #'   effects based on the `id` column.  The column `incl` will be used as the
 #'   left-hand-side variable indicating that a block is in the neighborhood.
-#' @param data the model data frame; usually the output of [make_model_frame()].
+#' @param data the model data frame.
 #'   Should have an `incl` column for block inclusion, an  `id` column with
 #'   respondent IDs, and a `dist` column with distances.
 #' @param prior_coef_scale the scale of the prior on the standardized predictors.
@@ -60,10 +60,9 @@ neighborhood_model = function(formula, data, prior_coef_scale=2.5, draws=1000,
         stop("Covariate matrix is not full rank.")
     }
 
-    fit = optimizing(stanmodels$nbhd_glmm,
-                     #data=stan_d, init="random", hessian=TRUE, draws=draws,
-                     data=stan_d, init=init, hessian=hessian, draws=draws,
-                     verbose=verbose, importance_resampling=imp_samp, ...)
+    fit = rstan::optimizing(stanmodels$nbhd_glmm,
+                            data=stan_d, init=init, hessian=hessian, draws=draws,
+                            verbose=verbose, importance_resampling=imp_samp, ...)
     if (!hessian) return(fit)
     if (fit$return_code != 0) cli::cli_abort("Finding MAP failed.")
 
@@ -134,33 +133,49 @@ print.nbhd_fit = function(x, ...) {
     cli::cat_line(as.list(capture.output(print(x$post$coefs))[-1]))
 }
 
+#' Functions for working with neighborhood fits
+#'
+#' @name nbhd_fit
+NULL
+
+#' @param object,x a `nbhd_fit` object
+#' @param ... Ignored.
+#'
 #' @method summary nbhd_fit
+#' @rdname nbhd_fit
 #' @export
 summary.nbhd_fit = function(object, ...) {
     summary(object$post[c("coefs", "alpha")]) %>%
         mutate(variable = if_else(str_starts(variable, "coefs"),
                                   str_sub(variable, 7, -2),
                                   variable)) %>%
-        select(-rhat:-ess_tail)
+        select(-"rhat":-"ess_tail")
 }
 
 #' @method coef nbhd_fit
+#' @rdname nbhd_fit
 #' @export
 coef.nbhd_fit = function(object, ...) {
     coefs = object$map[object$fixef]
     names(coefs) = names(object$fixef)
     coefs
 }
-#' @importFrom lme4 fixef
+
+
+#' @importFrom lme4 fixef ranef
+#' @export
+lme4::fixef
+#' @export
+lme4::ranef
+
 #' @method fixef nbhd_fit
-#' @export fixef
+#' @rdname nbhd_fit
 #' @export
 fixef.nbhd_fit = function(object, ...) {
     coef.nbhd_fit(object)
 }
-#' @importFrom lme4 ranef
 #' @method ranef nbhd_fit
-#' @export ranef
+#' @rdname nbhd_fit
 #' @export
 ranef.nbhd_fit = function(object, ...) {
     ranefs = object$map[object$ranef]
@@ -169,12 +184,14 @@ ranef.nbhd_fit = function(object, ...) {
 }
 
 #' @method fitted nbhd_fit
+#' @rdname nbhd_fit
 #' @export
 fitted.nbhd_fit = function(object, ...) {
     linpred = object$X %*% coef.nbhd_fit(object) + object$map[1]*ranef(object)[object$raw_ids]
     as.numeric(-expm1(-exp(linpred)))
 }
 #' @method residuals nbhd_fit
+#' @rdname nbhd_fit
 #' @export
 residuals.nbhd_fit = function(object, ...) {
     as.numeric(object$y) - fitted.nbhd_fit(object)
@@ -189,6 +206,7 @@ residuals.nbhd_fit = function(object, ...) {
 #' @param intercept if `FALSE`, don't plot the intercept estimate.
 #' @param inner_prob the inner credible interval probability
 #' @param outer_prob the inner credible interval probability
+#' @param ... Ignored.
 #'
 #' @return A ggplot.
 #'
@@ -196,6 +214,7 @@ residuals.nbhd_fit = function(object, ...) {
 #' @export
 plot.nbhd_fit = function(x, y=NULL, intercept=FALSE,
                          inner_prob = 0.5, outer_prob = 0.9, ...) {
+    rlang::check_installed("ggplot2")
     probs = c((1-inner_prob)/2, 1-(1-inner_prob)/2,
               (1-outer_prob)/2, 1-(1-outer_prob)/2)
     sum_d = summary(x$post[c("coefs", "alpha")],
@@ -208,19 +227,21 @@ plot.nbhd_fit = function(x, y=NULL, intercept=FALSE,
         sum_d = filter(sum_d, variable != "(Intercept)")
     names(sum_d)[2:5] = c("in_l", "in_h", "out_l", "out_h")
 
-    ggplot(sum_d, aes(variable, med)) +
-        geom_hline(yintercept=0, lty="dashed", color="#444444") +
-        geom_linerange(aes(ymin=out_l, ymax=out_h), size=0.75) +
-        geom_linerange(aes(ymin=in_l, ymax=in_h), size=1.25) +
-        geom_point(size=2) +
-        coord_flip() +
-        labs(x=NULL, y="Estimate")
+    ggplot2::ggplot(sum_d, ggplot2::aes(variable, med)) +
+        ggplot2::geom_hline(yintercept=0, lty="dashed", color="#444444") +
+        ggplot2::geom_linerange(ggplot2::aes(ymin=out_l, ymax=out_h), size=0.75) +
+        ggplot2::geom_linerange(ggplot2::aes(ymin=in_l, ymax=in_h), size=1.25) +
+        ggplot2::geom_point(size=2) +
+        ggplot2::coord_flip() +
+        ggplot2::labs(x=NULL, y="Estimate")
 }
 
+#' @rdname nbhd_fit
 #' @export
 as.matrix.nbhd_fit = function(x, ...) {
     posterior::as_draws_matrix(nm$post)
 }
+#' @rdname nbhd_fit
 #' @export
 as.data.frame.nbhd_fit = function(x, ...) {
     posterior::as_draws_df(nm$post)

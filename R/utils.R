@@ -1,4 +1,3 @@
-#' @export
 M_PER_MI = 1609.34
 
 
@@ -7,7 +6,9 @@ M_PER_MI = 1609.34
 #' @param fips the FIPS code to center the area at
 #' @param block_d the block data, with a `$fips` column matching `fips` argument.
 #' @param geom_d the block geometry data
-#' @param distance the radius of the area, in miles
+#' @param dist the radius of the area, in miles
+#'
+#' @returns a filtered `block_d`
 local_area = function(fips, block_d, geom_d, dist=0.5) {
     dist = dist * M_PER_MI
     idx = match(fips, block_d$fips)
@@ -24,9 +25,13 @@ local_area = function(fips, block_d, geom_d, dist=0.5) {
 #' Binned Residual Plot
 #'
 #' @param model the model object, which should have `fitted`, `resid`, etc. methods.
+#' @param bins the number of bins
+#'
+#' @returns A ggplot
 #'
 #' @export
 binned_resid = function(model, bins=16) {
+    rlang::check_installed("ggplot2")
     y_fit = fitted(model)
     y_res = resid(model, type="response")
     tibble(fitted = cut(y_fit, bins),
@@ -34,9 +39,10 @@ binned_resid = function(model, bins=16) {
         group_by(fitted) %>%
         summarize(mean = mean(y_res),
                   n = n()) %>%
-        mutate(fitted = parse_number(as.character(fitted))) %>%
-    ggplot(aes(x=fitted, y=mean, size=n)) +
-        geom_point()
+        mutate(fitted = str_split_fixed(as.character(fitted), ",", 2)[, 1],
+               fitted = as.numeric(str_split_fixed(as.character(fitted), "\\(", 2)[, 2])) %>%
+    ggplot2::ggplot(ggplot2::aes(x=fitted, y=mean, size=n)) +
+        ggplot2::geom_point()
 }
 
 

@@ -15,7 +15,7 @@
 #'   or codes corresponding to the indices in `graph`.
 #' @param max_ring the maximum graph distance from the starting block to allow.
 #' @param proc_fn a processing function that is used to prepare raw model data
-#'   (from [make_model_frame()]) for fitting
+#'   for fitting
 #'
 #' @returns A list of `draws` integer vectors containing the indices of the
 #'   blocks (in `block_d`) making up each simulated neighborhood.
@@ -52,7 +52,7 @@ simulate_neighborhood = function(fit, new_resp, draws=1, resp_id=NULL,
     start_fips = new_resp$neighborhood[[1]][1]
     start_idx = match(start_fips, block_gr$blocks)
     stopifnot(!is.na(start_idx))
-    new_resp = select(new_resp, -neighborhood, -city)
+    new_resp = select(new_resp, -"neighborhood")
     new_resp$id = as.character(resp_id)
 
     centr_col = which(names(block_d) == "centroid")

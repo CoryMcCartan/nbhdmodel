@@ -23,7 +23,7 @@ GLMM will be generated from this one: it will contain a term for log(dist)
 effects based on the \code{id} column.  The column \code{incl} will be used as the
 left-hand-side variable indicating that a block is in the neighborhood.}
 
-\item{data}{the model data frame; usually the output of \code{\link[=make_model_frame]{make_model_frame()}}.
+\item{data}{the model data frame.
 Should have an \code{incl} column for block inclusion, an  \code{id} column with
 respondent IDs, and a \code{dist} column with distances.}
 

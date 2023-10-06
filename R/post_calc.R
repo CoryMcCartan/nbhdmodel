@@ -7,7 +7,7 @@
 #'   effect will be set to zero.
 #' @param block_d the block data frame
 #' @param proc_fn a processing function that is used to prepare raw model data
-#'   (from [make_model_frame()]) for fitting
+#'   for fitting
 #' @param use_distance if `FALSE`, remove block-to-home distance from the linear
 #'   predictor.
 #'
@@ -74,7 +74,7 @@ post_incl = function(fit, new_resp, resp_id=NULL, block_d,
 #' @param new_resp a single-row respondent data frame to make predictions from
 #' @param block_d the block data frame
 #' @param proc_fn a processing function that is used to prepare raw model data
-#'   (from [make_model_frame()]) for fitting
+#'   for fitting
 #'
 #' @returns a numeric vector of effective distances
 #'

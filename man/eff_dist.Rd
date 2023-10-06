@@ -14,7 +14,7 @@ eff_dist(fit, new_resp, block_d, proc_fn = function(x) x)
 \item{block_d}{the block data frame}
 
 \item{proc_fn}{a processing function that is used to prepare raw model data
-(from \code{\link[=make_model_frame]{make_model_frame()}}) for fitting}
+for fitting}
 }
 \value{
 a numeric vector of effective distances

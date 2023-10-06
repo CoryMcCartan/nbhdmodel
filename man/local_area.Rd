@@ -13,7 +13,10 @@ local_area(fips, block_d, geom_d, dist = 0.5)
 
 \item{geom_d}{the block geometry data}
 
-\item{distance}{the radius of the area, in miles}
+\item{dist}{the radius of the area, in miles}
+}
+\value{
+a filtered \code{block_d}
 }
 \description{
 Filter block data to a radius of a FIPS code

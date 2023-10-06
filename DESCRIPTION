@@ -18,10 +18,10 @@ Depends: R (>= 4.0.0)
 Imports:
     rlang,
     cli,
+    methods,
     dplyr (>= 1.0.0),
     fastmatch,
     posterior,
-    purrr,
     stringr,
     Rcpp (>= 0.12.0),
     RcppParallel (>= 5.0.1),
@@ -38,6 +38,7 @@ LinkingTo:
     rstan (>= 2.18.1),
     StanHeaders (>= 2.18.0)
 Suggests:
+    ggplot2,
     readr
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -46,4 +47,3 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 SystemRequirements: GNU make
 URL: https://corymccartan.github.io/nbhdmodel, https://github.com/CoryMcCartan/nbhdmodel
-VignetteBuilder: knitr

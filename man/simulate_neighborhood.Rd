@@ -38,7 +38,7 @@ or codes corresponding to the indices in \code{graph}.}
 \item{max_ring}{the maximum graph distance from the starting block to allow.}
 
 \item{proc_fn}{a processing function that is used to prepare raw model data
-(from \code{\link[=make_model_frame]{make_model_frame()}}) for fitting}
+for fitting}
 }
 \value{
 A list of \code{draws} integer vectors containing the indices of the

@@ -8,6 +8,11 @@ binned_resid(model, bins = 16)
 }
 \arguments{
 \item{model}{the model object, which should have \code{fitted}, \code{resid}, etc. methods.}
+
+\item{bins}{the number of bins}
+}
+\value{
+A ggplot
 }
 \description{
 Binned Residual Plot
