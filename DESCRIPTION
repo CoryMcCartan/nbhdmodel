@@ -1,0 +1,49 @@
+Package: nbhdmodel
+Title: Neighborhood Modeling and Analysis
+Version: 0.1.0.9000
+Authors@R: c(
+    person("Cory", "McCartan", email="cmccartan@g.harvard.edu", role=c("aut", "cre")),
+    person("Jacob", "Brown", email="jrbrown@g.harvard.edu", role="aut"),
+    person("Kosuke", "Imai", email="imai@harvard.edu", role="aut")
+    )
+Description: Functionality for fitting neighborhood models of McCartan, 
+    Brown, and Imai <arXiv:2110.14014>. The core methodology is described in the
+    paper and can be implemented with any tool that can fit generalized linear 
+    mixed models (GLMMs). However, some of the preprocessing necessary to set up
+    the GLMM can be onerous. In addition to providing a specialized GLMM routine, 
+    this package provides several preprocessing functions that, while not 
+    completely general, should be useful for others performing these kinds of 
+    analyses.
+Depends: R (>= 4.0.0)
+Imports:
+    rlang,
+    cli,
+    dplyr (>= 1.0.0),
+    fastmatch,
+    posterior,
+    purrr,
+    stringr,
+    Rcpp (>= 0.12.0),
+    RcppParallel (>= 5.0.1),
+    lme4,
+    rstan (>= 2.18.1),
+    s2,
+    sf
+LinkingTo: 
+    BH (>= 1.66.0),
+    cpp11,
+    Rcpp (>= 0.12.0),
+    RcppEigen (>= 0.3.3.3.0),
+    RcppParallel (>= 5.0.1),
+    rstan (>= 2.18.1),
+    StanHeaders (>= 2.18.0)
+Suggests:
+    readr
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+SystemRequirements: GNU make
+URL: https://corymccartan.github.io/nbhdmodel, https://github.com/CoryMcCartan/nbhdmodel
+VignetteBuilder: knitr

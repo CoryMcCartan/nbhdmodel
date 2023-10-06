@@ -1,0 +1,4 @@
+url: https://corymccartan.github.io/neighborhood-model-survey
+template:
+  params:
+    bootswatch: lumen

@@ -1,0 +1,15 @@
+.DS_Store
+.Rhistory
+.Rproj.user
+data-raw/*.csv
+data-raw/*/
+doc/*_cache
+*.swp
+*.bak
+*.tmp
+*.gcx
+inst/doc
+tests/*.rds
+src/*/*.rds
+Meta
+docs
