@@ -77,8 +77,6 @@ post_incl = function(fit, new_resp, resp_id=NULL, block_d,
 #'   for fitting
 #'
 #' @returns a numeric vector of effective distances
-#'
-#' @export
 eff_dist = function(fit, new_resp, block_d, proc_fn=function(x) x) {
     stopifnot(inherits(fit, "nbhd_fit"))
     coefs = t(cbind(draws_of(fit$post$coefs * fit$post$alpha),

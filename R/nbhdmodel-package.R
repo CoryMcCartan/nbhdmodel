@@ -7,7 +7,7 @@
 #' @import sf
 #' @import s2
 #' @importFrom posterior quantile2 draws_of
-#' @importFrom stringr str_detect str_replace str_sub str_length str_c str_starts str_split_fixedc
+#' @importFrom stringr str_detect str_replace str_sub str_length str_c str_starts str_split_fixed
 #' @importFrom fastmatch fmatch fmatch.hash
 #' @importFrom stats .getXlevels fitted median model.frame model.matrix
 #' @importFrom stats resid rnorm terms update.formula

@@ -27,6 +27,8 @@
 #' - `dist` the distance to the respondent's block
 #' - `frac_con` the fraction of nearer blocks in the neighborhood this block
 #' is connected to.
+#'
+#' @export
 calc_indiv_frame = function(row, nbhd, block_d, block_gr) {
     if (length(nbhd) <= 1) stop("Neighborhood must have at least two blocks.")
 
