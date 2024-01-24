@@ -12,6 +12,7 @@
 #' @importFrom stats .getXlevels fitted median model.frame model.matrix
 #' @importFrom stats resid rnorm terms update.formula
 #' @importFrom utils capture.output globalVariables
+#' @importFrom methods new
 #' @importFrom Rcpp evalCpp
 #' @importFrom RcppParallel CxxFlags
 #' @useDynLib nbhdmodel, .registration = TRUE
