@@ -11,4 +11,4 @@ To install, run:
 remotes::install_github("CoryMcCartan/nbhdmodel")
 ```
 
-**Looking for the web survey tool to collect drawn neighborhoods?** See [`CoryMcCartan/neighborhood-survey`](https://github.com/CoryMcCartan/neighborhood-survey>).
+**Looking for the web survey tool to collect drawn neighborhoods?** See [`CoryMcCartan/neighborhood-survey`](https://github.com/CoryMcCartan/neighborhood-survey).
